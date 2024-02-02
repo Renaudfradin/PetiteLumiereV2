@@ -20,7 +20,7 @@ return new class extends Migration
             $table->longText('content');
             $table->string('image')->nullable();
             $table->boolean('active');
-            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('category_id')->nullable();
             $table->timestamps();
         });
     }
