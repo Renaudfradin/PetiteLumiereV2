@@ -3,17 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PostResource\Pages;
-use App\Filament\Resources\PostResource\RelationManagers;
 use App\Models\Post;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class PostResource extends Resource
 {
     protected static ?string $model = Post::class;
+
+    protected static ?string $recordTitleAttribute = 'title';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -22,26 +25,43 @@ class PostResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('title')
-                    ->translateLabel(),
+                    ->translateLabel()
+                    ->required()
+                    ->maxLength(255)
+                    ->live(onBlur: true)
+                    ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
 
                 Forms\Components\TextInput::make('slug') 
-                    ->translateLabel(),
+                    ->translateLabel()
+                    ->maxLength(255)
+                    ->required(),
 
                 Forms\Components\TextInput::make('quote') 
-                    ->translateLabel(),
+                    ->translateLabel()
+                    ->maxLength(255)
+                    ->required(),
 
                 Forms\Components\TextInput::make('quote_author') 
-                    ->translateLabel(),
-
-                Forms\Components\TextInput::make('content') 
-                    ->translateLabel(),
-
-                Forms\Components\Toggle::make('active') 
-                    ->translateLabel(),
+                    ->translateLabel()
+                    ->maxLength(255)
+                    ->required(),
 
                 Forms\Components\Select::make('category_id')
                     ->relationship('category', 'name')
-                    ->preload(),
+                    ->preload()
+                    ->required(),
+
+                Forms\Components\Toggle::make('active')
+                    ->translateLabel()
+                    ->inline(false)
+                    ->onColor('success')
+                    ->offColor('danger')
+                    ->required(),
+
+                Forms\Components\MarkdownEditor::make('content')
+                    ->translateLabel()
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -49,26 +69,36 @@ class PostResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('title')
+                    ->translateLabel()
+                    ->sortable()
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label(__('Category name'))
+                    ->sortable(),
+
+                Tables\Columns\IconColumn::make('active')
+                    ->translateLabel()
+                    ->sortable()
+                    ->boolean(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('category_id')
+                    ->label(__('Category'))
+                    ->relationship('category', 'name')
+                    ->preload()
+                    ->searchable(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
