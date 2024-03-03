@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -10,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Post extends Model
 {
     protected $fillable = ['title', 'slug', 'quote', 'quote_author', 'content', 'active'];
+
+    protected $casts = [
+        'active' => 'boolean',
+    ];
 
     public function category(): BelongsTo
     {
