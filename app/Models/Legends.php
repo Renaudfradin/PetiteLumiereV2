@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Legends extends Model
 {
-    protected $fillable = ['title', 'slug', 'content', 'url', 'active'];
+    use HasFactory;
+
+    protected $fillable = ['title', 'slug', 'content', 'url', 'active', 'post_id'];
+
+    protected $casts = [
+        'active' => 'boolean',
+    ];
 
     public function post(): BelongsTo
     {

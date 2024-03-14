@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['name', 'slug', 'active'];
+
+    protected $casts = [
+        'active' => 'boolean',
+    ];
 
     public function posts(): HasMany
     {

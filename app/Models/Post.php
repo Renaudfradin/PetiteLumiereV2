@@ -9,7 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
 {
+    use HasFactory;
+
     protected $fillable = ['title', 'slug', 'quote', 'quote_author', 'content', 'active'];
+
+    protected $casts = [
+        'active' => 'boolean',
+    ];
 
     public function category(): BelongsTo
     {

@@ -36,7 +36,15 @@ composer update
 ./vendor/bin/sail up
 ```
 
-3. Port
+```sh
+./vendor/bin/sail migrate
+```
 
-front : http://localhost/
+```sh
+./vendor/bin/sail artisan migrate:fresh --seed
+```
+
+3. Port : 8001
+
+http://localhost:8001/
 

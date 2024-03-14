@@ -4,16 +4,16 @@ namespace App\Filament\Resources\LegendsResource\Pages;
 
 use App\Filament\Resources\LegendsResource;
 use Filament\Actions;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 
-class EditLegends extends EditRecord
+class ViewLegends extends ViewRecord
 {
     protected static string $resource = LegendsResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
+            Actions\EditAction::make(),
             Actions\DeleteAction::make(),
         ];
     }

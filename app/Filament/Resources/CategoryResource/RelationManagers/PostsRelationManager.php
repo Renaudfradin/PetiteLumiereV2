@@ -1,26 +1,20 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Resources\CategoryResource\RelationManagers;
 
-use App\Filament\Resources\LegendsResource\Pages;
-use App\Models\Legends;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
-use Filament\Resources\Resource;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
-class LegendsResource extends Resource
+class PostsRelationManager extends RelationManager
 {
-    protected static ?string $model = Legends::class;
+    protected static string $relationship = 'posts';
 
-    protected static ?string $recordTitleAttribute = 'title';
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    public static function form(Form $form): Form
+    public function form(Form $form): Form
     {
         return $form
             ->schema([
@@ -36,14 +30,18 @@ class LegendsResource extends Resource
                     ->maxLength(255)
                     ->required(),
 
-                Forms\Components\TextInput::make('url')
+                Forms\Components\TextInput::make('quote')
                     ->translateLabel()
                     ->maxLength(255)
-                    ->url()
                     ->required(),
 
-                Forms\Components\Select::make('post_id')
-                    ->relationship('post', 'title')
+                Forms\Components\TextInput::make('quote_author')
+                    ->translateLabel()
+                    ->maxLength(255)
+                    ->required(),
+
+                Forms\Components\Select::make('category_id')
+                    ->relationship('category', 'name')
                     ->preload()
                     ->required(),
 
@@ -61,17 +59,18 @@ class LegendsResource extends Resource
             ]);
     }
 
-    public static function table(Table $table): Table
+    public function table(Table $table): Table
     {
         return $table
+            ->recordTitleAttribute('id')
             ->columns([
                 Tables\Columns\TextColumn::make('title')
                     ->translateLabel()
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('post.title')
-                    ->label(__('Post name'))
+                Tables\Columns\TextColumn::make('category.name')
+                    ->label(__('Category name'))
                     ->sortable(),
 
                 Tables\Columns\IconColumn::make('active')
@@ -79,32 +78,11 @@ class LegendsResource extends Resource
                     ->sortable()
                     ->boolean(),
             ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('post_id')
-                    ->label(__('Posts'))
-                    ->relationship('post', 'title')
-                    ->preload()
-                    ->searchable(),
+            ->headerActions([
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
-    }
-
-    public static function getPages(): array
-    {
-        return [
-            'index' => Pages\ListLegends::route('/'),
-            'create' => Pages\CreateLegends::route('/create'),
-            'view' => Pages\ViewLegends::route('/{record}'),
-            'edit' => Pages\EditLegends::route('/{record}/edit'),
-        ];
     }
 }
