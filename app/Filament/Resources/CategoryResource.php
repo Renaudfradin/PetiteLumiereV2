@@ -56,7 +56,7 @@ class CategoryResource extends Resource
                     ->translateLabel()
                     ->sortable(),
 
-            Tables\Columns\IconColumn::make('active')
+                Tables\Columns\IconColumn::make('active')
                     ->translateLabel()
                     ->sortable()
                     ->boolean(),
@@ -82,7 +82,7 @@ class CategoryResource extends Resource
     public static function getRelations(): array
     {
         return [
-            PostsRelationManager::class
+            PostsRelationManager::class,
         ];
     }
 

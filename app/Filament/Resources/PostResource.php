@@ -31,17 +31,17 @@ class PostResource extends Resource
                     ->live(onBlur: true)
                     ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
 
-                Forms\Components\TextInput::make('slug') 
+                Forms\Components\TextInput::make('slug')
                     ->translateLabel()
                     ->maxLength(255)
                     ->required(),
 
-                Forms\Components\TextInput::make('quote') 
+                Forms\Components\TextInput::make('quote')
                     ->translateLabel()
                     ->maxLength(255)
                     ->required(),
 
-                Forms\Components\TextInput::make('quote_author') 
+                Forms\Components\TextInput::make('quote_author')
                     ->translateLabel()
                     ->maxLength(255)
                     ->required(),
