@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreseriesRequest;
-use App\Http\Requests\UpdateseriesRequest;
-use App\Models\series;
+use App\Http\Requests\StoreSeriesRequest;
+use App\Http\Requests\UpdateSeriesRequest;
+use App\Models\Series;
 
 class SeriesController extends Controller
 {
@@ -27,7 +27,7 @@ class SeriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreseriesRequest $request)
+    public function store(StoreSeriesRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class SeriesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(series $series)
+    public function show(Series $series)
     {
         //
     }
@@ -43,7 +43,7 @@ class SeriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(series $series)
+    public function edit(Series $series)
     {
         //
     }
@@ -51,7 +51,7 @@ class SeriesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateseriesRequest $request, series $series)
+    public function update(UpdateSeriesRequest $request, Series $series)
     {
         //
     }
@@ -59,7 +59,7 @@ class SeriesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(series $series)
+    public function destroy(Series $series)
     {
         //
     }
