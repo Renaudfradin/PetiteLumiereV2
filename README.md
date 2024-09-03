@@ -30,9 +30,11 @@ L’objectif ultime : faciliter l’accès à l’univers tout en laissant au le
 
 J’espère que vous trouverez ici le compagnon parfait pour vous accompagner dans votre exploration de Destiny. Bonne lecture 😉
 
-## 🛠 Installation & Set Up
+### 🛠 Installation & Set Up
 
 1. Install dependencies
+
+Back
 
 ```sh
 composer install
@@ -40,6 +42,11 @@ composer install
 
 ```sh
 composer update
+```
+Front
+
+```sh
+npm install
 ```
 
 2. Run migration and factory
@@ -56,6 +63,10 @@ composer update
 
 ```sh
 ./vendor/bin/sail up
+```
+ 
+```sh
+npm run dev
 ```
 
 4. Port : 8001
