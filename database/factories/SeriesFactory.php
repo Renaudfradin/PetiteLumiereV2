@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Series;
+use App\Models\Post;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
-class LegendsFactory extends Factory
+class SeriesFactory extends Factory
 {
     public function definition(): array
     {
@@ -15,10 +15,8 @@ class LegendsFactory extends Factory
         return [
             'title' => $title,
             'slug' => Str::slug($title),
-            'content' => fake()->name(),
-            'series_id' => Series::factory(),
-            'image' => fake()->name(),
-            'active' => fake()->boolean(),
+            'posts_id' => Post::factory(),
+            'description' => fake()->name(),
         ];
     }
 }

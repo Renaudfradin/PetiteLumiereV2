@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('legends', function (Blueprint $table) {
+        Schema::create('legends_series', function (Blueprint $table) {
             $table->id();
-            $table->string('title', 255);
-            $table->string('slug', 255);
-            $table->longText('content');
-            $table->unsignedInteger('series_id')->nullable();
-            $table->string('image')->nullable();
-            $table->boolean('active');
+            $table->foreignId('legends_id');
+            $table->foreignId('series_id');
             $table->timestamps();
         });
     }
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('legends');
+        Schema::dropIfExists('legends_series');
     }
 };

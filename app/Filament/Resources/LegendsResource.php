@@ -36,15 +36,10 @@ class LegendsResource extends Resource
                     ->maxLength(255)
                     ->required(),
 
-                Forms\Components\TextInput::make('url')
-                    ->translateLabel()
-                    ->maxLength(255)
-                    ->url()
-                    ->required(),
-
-                Forms\Components\Select::make('post_id')
-                    ->relationship('post', 'title')
+                Forms\Components\Select::make('series_id')
+                    ->relationship('series', 'title')
                     ->preload()
+                    ->searchable()
                     ->required(),
 
                 Forms\Components\Toggle::make('active')
@@ -70,9 +65,9 @@ class LegendsResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('post.title')
-                    ->label(__('Post name'))
-                    ->sortable(),
+                // Tables\Columns\TextColumn::make('series.title')
+                //     ->label(__('Series name'))
+                //     ->sortable(),
 
                 Tables\Columns\IconColumn::make('active')
                     ->translateLabel()
@@ -80,11 +75,11 @@ class LegendsResource extends Resource
                     ->boolean(),
             ])
             ->filters([
-                Tables\Filters\SelectFilter::make('post_id')
-                    ->label(__('Posts'))
-                    ->relationship('post', 'title')
-                    ->preload()
-                    ->searchable(),
+                // Tables\Filters\SelectFilter::make('post_id')
+                //     ->label(__('Posts'))
+                //     ->relationship('post', 'title')
+                //     ->preload()
+                //     ->searchable(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

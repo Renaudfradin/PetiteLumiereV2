@@ -6,28 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('legends', function (Blueprint $table) {
+        Schema::create('series', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255);
             $table->string('slug', 255);
-            $table->longText('content');
-            $table->unsignedInteger('series_id')->nullable();
-            $table->string('image')->nullable();
-            $table->boolean('active');
+            $table->longText('description');
+            $table->integer('posts_id')->nullable();
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::drop('legends');
+        Schema::dropIfExists('series');
     }
 };
