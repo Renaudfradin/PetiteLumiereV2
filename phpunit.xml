@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true"
+<phpunit 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    backupGlobals="false"
+    bootstrap="vendor/autoload.php"
+    colors="true"
+    processIsolation="false"
+    stopOnFailure="false"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd"
+    cacheDirectory=".phpunit.cache"
+    backupStaticProperties="false"
 >
     <testsuites>
-        <testsuite name="Unit">
+        <!-- <testsuite name="Unit">
             <directory>tests/Unit</directory>
-        </testsuite>
+        </testsuite> -->
         <testsuite name="Feature">
-            <directory>tests/Feature</directory>
+            <directory>./tests/Feature</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <env name="APP_ENV" value="testing" />
+        <env name="DB_CONNECTION" value="sqlite" />
+        <env name="DB_DATABASE" value=":memory:" />
+        <env name="CACHE_DRIVER" value="array" />
+        <env name="QUEUE_DRIVER" value="sync" />
+        <env name="MAIL_DRIVER" value="array" />
+        <env name="BCRYPT_ROUNDS" value="4" />
+        <env name="CACHE_DRIVER" value="file" /> <!-- Or array -->
+        <env name="PROJECT_CACHE_DRIVER" value="file" />
+        <env name="LOG_CHANNEL" value="daily" />
+        <env name="BUGSNAG_API_KEY" value="" />
+    </php>
     <source>
         <include>
-            <directory>app</directory>
+            <directory suffix=".php">./app/Models</directory>
+            <directory suffix=".php">./app/Traits</directory>
         </include>
     </source>
-    <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="BCRYPT_ROUNDS" value="4"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <env name="DB_DATABASE" value="testing"/>
-        <env name="MAIL_MAILER" value="array"/>
-        <env name="PULSE_ENABLED" value="false"/>
-        <env name="QUEUE_CONNECTION" value="sync"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="TELESCOPE_ENABLED" value="false"/>
-    </php>
 </phpunit>

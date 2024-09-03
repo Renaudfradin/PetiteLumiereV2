@@ -10,14 +10,14 @@ class Legends extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'slug', 'content', 'url', 'active', 'post_id'];
+    protected $fillable = ['title', 'slug', 'content', 'url', 'active', 'series_id'];
 
     protected $casts = [
         'active' => 'boolean',
     ];
 
-    public function post(): BelongsTo
+    public function series(): BelongsTo
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Series::class, 'series_id');
     }
 }

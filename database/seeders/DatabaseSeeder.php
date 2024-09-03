@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Legends;
 use App\Models\Post;
+use App\Models\Series;
 use App\Models\User;
 use Closure;
 use Illuminate\Database\Eloquent\Collection;
@@ -22,8 +23,9 @@ class DatabaseSeeder extends Seeder
             ])
         );
         $this->command->info('Admin user created.');
-        Post::factory()->count(100)->has(Legends::factory()->count(20), 'legends')->create();
-        Category::factory()->count(50)->has(Post::factory()->count(10))->create();
+        Post::factory()->count(50)->has(Series::factory()->count(20), 'series')->create();
+        Series::factory()->count(50)->has(Legends::factory()->count(20), 'legends')->create();
+        Category::factory()->count(10)->has(Post::factory()->count(10))->create();
     }
 
     protected function withProgressBar(int $amount, Closure $createCollectionOfOne): Collection
@@ -32,7 +34,7 @@ class DatabaseSeeder extends Seeder
 
         $progressBar->start();
 
-        $items = new Collection();
+        $items = new Collection;
 
         foreach (range(1, $amount) as $i) {
             $items = $items->merge(

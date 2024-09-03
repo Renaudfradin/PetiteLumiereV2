@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PostResource\Pages;
-use App\Filament\Resources\PostResource\RelationManagers\SeriesRelationManager;
-use App\Models\Post;
+use App\Filament\Resources\SeriesResource\Pages;
+use App\Filament\Resources\SeriesResource\RelationManagers\LegendsRelationManager;
+use App\Models\Series;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Set;
@@ -13,9 +13,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Str;
 
-class PostResource extends Resource
+class SeriesResource extends Resource
 {
-    protected static ?string $model = Post::class;
+    protected static ?string $model = Series::class;
 
     protected static ?string $recordTitleAttribute = 'title';
 
@@ -37,29 +37,13 @@ class PostResource extends Resource
                     ->maxLength(255)
                     ->required(),
 
-                Forms\Components\TextInput::make('quote')
-                    ->translateLabel()
-                    ->maxLength(255)
-                    ->required(),
-
-                Forms\Components\TextInput::make('quote_author')
-                    ->translateLabel()
-                    ->maxLength(255)
-                    ->required(),
-
-                Forms\Components\Select::make('category_id')
-                    ->relationship('category', 'name')
+                Forms\Components\Select::make('posts_id')
+                    ->relationship('posts', 'title')
                     ->preload()
+                    ->searchable()
                     ->required(),
 
-                Forms\Components\Toggle::make('active')
-                    ->translateLabel()
-                    ->inline(false)
-                    ->onColor('success')
-                    ->offColor('danger')
-                    ->required(),
-
-                Forms\Components\MarkdownEditor::make('content')
+                Forms\Components\MarkdownEditor::make('description')
                     ->translateLabel()
                     ->required()
                     ->columnSpanFull(),
@@ -75,24 +59,15 @@ class PostResource extends Resource
                     ->sortable()
                     ->searchable(),
 
-                Tables\Columns\TextColumn::make('category.name')
-                    ->label(__('Category name'))
+                Tables\Columns\TextColumn::make('slug')
+                    ->translateLabel()
                     ->sortable(),
 
-                Tables\Columns\IconColumn::make('active')
+                Tables\Columns\TextColumn::make('posts.title')
                     ->translateLabel()
-                    ->sortable()
-                    ->boolean(),
-            ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('category_id')
-                    ->label(__('Category'))
-                    ->relationship('category', 'name')
-                    ->preload()
-                    ->searchable(),
+                    ->sortable(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -106,17 +81,16 @@ class PostResource extends Resource
     public static function getRelations(): array
     {
         return [
-            SeriesRelationManager::class,
+            LegendsRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPosts::route('/'),
-            'create' => Pages\CreatePost::route('/create'),
-            'view' => Pages\ViewPost::route('/{record}'),
-            'edit' => Pages\EditPost::route('/{record}/edit'),
+            'index' => Pages\ListSeries::route('/'),
+            'create' => Pages\CreateSeries::route('/create'),
+            'edit' => Pages\EditSeries::route('/{record}/edit'),
         ];
     }
 }
